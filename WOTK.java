@@ -5,10 +5,10 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-//import jdk.nashorn.internal.ir.CatchNode;
-
 // get minimal libraries, current a quick fix
 import java.util.*; 
+import java.util.Random;
+
 import java.io.*;
  
 public class WOTK {
@@ -25,10 +25,12 @@ public class WOTK {
     static boolean answerDifficulty = false; // false = easy, true = hard
     static List<String[]> answersEasy = new ArrayList<>();
     static List<String[]> answersHard = new ArrayList<>();
+    static String[] question; // question currently asked
+    static Random random = new Random(); // random question selection
  
     public static void main(String args[]) {
         JFrame frame = new JFrame("The Wrath of the Kilobyte");
-        frame.setLayout(new GridLayout(5, 1));
+        frame.setLayout(new GridLayout(6, 1));
         KeyListener listener = new KeyListener() {
             @Override 
             public void keyPressed(KeyEvent event) {
@@ -107,25 +109,32 @@ public class WOTK {
 
     public static void askEasyQuestion() {
         answerMode = true;
-        System.out.println("Easy Question!!!!"); // testing dynamics and they work
-        String[] question = answersEasy.get(0);
-        label[0].setText(question[0]);
-        // question to be selected at random
-        // display selected question (instruction to press corresponding key can be left in label[5]??)
+        question = answersEasy.get(random.nextInt(answersEasy.size()));
+        displayQuestion();
     }
 
     public static void askHardQuestion() {
         answerMode = true;
-        System.out.println("Hard Question!!!!"); // testing dynamics and they work
-        // question to be selected at random
-        // display selected question (instruction to press corresponding key can be left in label[5]??)
+        question = answersHard.get(random.nextInt(answersHard.size()));
+        displayQuestion();
+    }
+
+    public static void displayQuestion() {
+        label[0].setText(question[0]);
+        label[1].setText("a) " + question[1]);
+        label[2].setText("b) " + question[2]);
+        label[3].setText("c) " + question[3]);
+        label[4].setText("d) " + question[4]);
+        label[5].setText("Please select your answer by pressing corresponding keyboard key.");
     }
 
     public static void checkAnswer(char selectedAnswer) {
         answerMode = false;
-        System.out.println("answer: " + selectedAnswer); // testing dynamics and they work
-        // check if answer is correct
-        // display and state press e or h for next question
+        if (question[5].contains(selectedAnswer + "")) {
+            label[5].setText("<html><font color='green'>The answer is: " + question[5] + ".</font>");
+        } else {
+            label[5].setText("<html><font color='red'>The answer is: " + question[5] + ".</font>");
+        }
     }
 
     public static void readCSV(String filename) {
