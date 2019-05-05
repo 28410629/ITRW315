@@ -5,13 +5,22 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import jdk.nashorn.internal.ir.CatchNode;
+//import jdk.nashorn.internal.ir.CatchNode;
 
-import java.util.*;
+// get minimal libraries, current a quick fix
+import java.util.*; 
 import java.io.*;
  
 public class WOTK {
-    static JLabel[] label = new JLabel[5];
+    static JLabel[] label = new JLabel[6];
+    /*
+    0 - easy or hard question
+    1 - answer a
+    2 - answer b
+    3 - answer c
+    4 - answer d
+    5 - correct answer
+     */
     static boolean answerMode = false;
     static boolean answerDifficulty = false; // false = easy, true = hard
     static List<String[]> answersEasy = new ArrayList<>();
@@ -54,36 +63,45 @@ public class WOTK {
                             break;
                     }
                 }
-                //System.out.println("Char : " + event.getKeyChar());
+                // useful for debug:
+                // System.out.println("Char : " + event.getKeyChar());
                 frame.revalidate();
                 frame.repaint();
             }
             @Override
             public void keyReleased(KeyEvent event) {
+                // leave blank, event not used, but overwritten
             }
             @Override
             public void keyTyped(KeyEvent event) {
+                // leave blank, event not used, but overwritten
             }
         };
-       
+        
+        // create labels
         for (int i = 0; i < label.length; i++) {
             label[i] = new JLabel();
         }
+        // intro, can maybe be changed to messagebox with ok button
         label[0].setText("Welcome to 'The Wrath of the Kilobyte'!");
         label[2].setText("This is the questions to the game.");
         label[3].setText("Simply select your question difficulty by pressing the letter 'E' or 'H'.");
         label[4].setText("Finally enter your answer to the question by pressing the correlating key\n and the system will return with the correct one!");
+        // add them to frame
         for (int i = 0; i < label.length; i++) {
             frame.add(label[i]);
         }
+        // frame properties
         frame.addKeyListener(listener);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 200);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
+        // load answer csv before showing frame
         readCSV("answersEasy.csv");
         readCSV("answersHard.csv");
+        // show frame
         frame.setVisible(true); 
     }
 
