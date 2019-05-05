@@ -1,16 +1,19 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.GridLayout;
- 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
+import java.awt.Font;
+import java.awt.Color;
 // get minimal libraries, current a quick fix
-import java.util.*; 
+import java.util.*;
 import java.util.Random;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import java.io.*;
- 
+
 public class WOTK {
     static JLabel[] label = new JLabel[6];
     /*
@@ -27,12 +30,29 @@ public class WOTK {
     static List<String[]> answersHard = new ArrayList<>();
     static String[] question; // question currently asked
     static Random random = new Random(); // random question selection
- 
+
     public static void main(String args[]) {
         JFrame frame = new JFrame("The Wrath of the Kilobyte");
+        ImageIcon img = new ImageIcon("favicon.png");
+        frame.setIconImage(img.getImage());
         frame.setLayout(new GridLayout(6, 1));
+        frame.setBackground(Color.black);
+
+        //starts music
+        try
+        {
+          Clip clip = AudioSystem.getClip();
+          clip.open(AudioSystem.getAudioInputStream(new File("song.wav").toURL()));
+          clip.start();
+          clip.loop(Clip.LOOP_CONTINUOUSLY);
+        }
+        catch(Exception e)
+        {
+          System.out.println("Error in audio.");
+        }
+
         KeyListener listener = new KeyListener() {
-            @Override 
+            @Override
             public void keyPressed(KeyEvent event) {
                 if (answerMode) {
                     switch (event.getKeyChar()) {
@@ -79,10 +99,15 @@ public class WOTK {
                 // leave blank, event not used, but overwritten
             }
         };
-        
+
         // create labels
-        for (int i = 0; i < label.length; i++) {
+        for (int i = 0; i < label.length; i++)
+        {
             label[i] = new JLabel();
+            label[i].setFont(new Font("Lucida Console", Font.PLAIN, 11));
+            label[i].setForeground(Color.white);
+            label[i].setOpaque(true);
+            label[i].setBackground(Color.BLACK);
         }
         // intro, can maybe be changed to messagebox with ok button
         label[0].setText("Welcome to 'The Wrath of the Kilobyte'!");
@@ -97,14 +122,14 @@ public class WOTK {
         frame.addKeyListener(listener);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 200);
+        frame.setSize(900, 250);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         // load answer csv before showing frame
         readCSV("answersEasy.csv");
         readCSV("answersHard.csv");
         // show frame
-        frame.setVisible(true); 
+        frame.setVisible(true);
     }
 
     public static void askEasyQuestion() {
