@@ -7,4 +7,9 @@ Operating system is,Collection of hardware components,Collection of software rou
 Execution of two or more programs by a single CPU is known as,Multiprocessig,Time sharing,Multiprogramming,None of the above,a
 Ethernet uses,Bus topology,Star topology,Ring topology,Mesh topology,a
 Bug means,Logical error in program,Documenting programs using an effecient documentation tool,Difficult syntax error in program,None of the above,a
-C programming language is,Assembly language,Third generation high level language,Machine language, None of the above,c
+C programming language is,Assembly language,Third generation high level language,Machine language,None of the above,c
+CD-ROM is a,Semiconductor memory,Memory register,Magnetic memory,None of the above,d
+A floppy disk contains,Circular tracks only,Sectors only,Both circular tracks and sectors,None of the above,c
+Which of the following is used as a primary storage device,Magnetic tape,PROM,Floppy disk,CD ROM,b
+Operating system,Link a program with subroutines it references,Provides a layered user-friendly interface,Enables a programmer to draw a flowchart,None of the above,b
+The errors that can be pointedout by the compiler are,Syntax error,Semantic error,Logical error,None,a
